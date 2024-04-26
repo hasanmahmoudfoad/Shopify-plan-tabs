@@ -1,0 +1,299 @@
+<script src="{{ 'jquery.min.js' | asset_url }}" defer="defer"></script>
+<link href="{{ 'bootstrap.min.css' | asset_url }}" rel="stylesheet" type="text/css">
+<script src="{{ 'bootstrap.min.js' | asset_url }}" defer="defer"></script>
+
+
+
+
+{% style %}
+  .color-theme{
+    color:{{section.settings.plan_theme_color}} !important;
+  }
+  .f-family{
+        font-family: var(--font_stack_heading);
+  }
+  .f-size-regular-{{ section.id }}{
+        font-size: 18px !important;
+  }
+  .title_font_size-{{ section.id }}{
+    font-size : {{ section.settings.title_font_size }}px;
+  }
+  .button_font_size-{{ section.id }}{
+     !important;
+  }
+  /* ================================= */
+.price-ul {
+        border: 0;
+  display: flex;
+  justify-content: center;
+}
+.pricing-tabs .nav-tabs .nav-link{
+        border: 0;
+}
+.price-ul li{
+  /* margin:1rem; */
+}
+.price-ul button {
+  color: #333;
+  padding: 1rem 3rem;
+  box-shadow: none;
+  border: none;
+  font-size: 20px;
+}
+.price-ul .active {
+  border: 0;
+  border-bottom: 5px solid {{section.settings.plan_theme_color}} !important;
+}
+.nav-link:hover {
+  color: #505050 !important;
+}
+  price-tab{
+    background: #ffffff;
+    box-shadow: 0px 0px 20px #ccc;
+    width: 100%;
+    display: block;
+    border-radius: 0.7rem;
+  }
+  price-tab h3, price-tab h4{
+    font-weight: 600;
+  }
+
+  free-stuff, savings{
+    font-size:1.1rem;
+  }
+  free-stuff p, savings p{
+    margin-bottom: 0.3rem;
+  }
+  
+  .btn-container a{
+    background: {{section.settings.plan_theme_color}};
+    font-size : {{ section.settings.btn_font_size }}px;
+    border-radius: 0;
+    width: 90%;
+    color: #fff;
+    padding: 0.5rem;
+    display: block;
+    margin: 0 auto;
+  }
+  .btn-container a:hover{
+    background:#fff;
+    color:{{section.settings.plan_theme_color}};
+    border:1px solid {{section.settings.plan_theme_color}};  
+  }
+{% endstyle %}
+
+
+
+
+<section id='{{ section.id }}' class="tabs pricing-tabs">
+  <div class="container">
+    <ul class="nav nav-tabs price-ul" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#home"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          <strong>MONTHLY PLANS</strong>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#profile"
+          type="button"
+          role="tab"
+          aria-controls="profile"
+          aria-selected="false"
+        >
+          <strong>ANNUAL PLANS</strong>
+        </button>
+      </li>
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class='row'>
+          {% for block in section.blocks %}
+          {% if block.type == 'month_plan' %}
+              <div class='col-12 col-md-6 col-lg-3 my-5'>
+                <price-tab class='px-2 py-4 d-block text-center'>
+                  <h3 class='my-3 text-uppercase color-theme f-family title_font_size-{{ section.id }}'>{{ block.settings.plan_mo_title }}</h3>
+                  <savings class='color-theme px-3 f-family'>{{ block.settings.plan_mo_savings }}</savings>
+                  <h4 class='plan-price mb-3 f-family' >{{ block.settings.plan_mo_price }}</h4>
+                  <free-stuff class='color-theme px-3  my-3 d-block  f-family'>{{ block.settings.free_mo_stuff }}</free-stuff>
+                  <div class='text-center px-3 f-size-regular-{{ section.id }}'>{{ block.settings.plan_mo_details }}</div>
+                  <div class='mt-5 mb-3  px-3 f-family'>{{ block.settings.giveaway_mo_entries }}</div>
+                  <div class='btn-container'>
+                     <a class='  btn-lg f-family text-decoration-none ' href="{{ block.settings.product_mo_url }}">ADD TO CART</a>
+                  </div>
+                </price-tab> 
+              </div>
+          {% endif %}
+           {% endfor %}
+        </div>
+      </div>
+     
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class='row'>
+          {% for block in section.blocks %}
+          {% if block.type == 'year_plan' %}
+              <div class='col-12 col-md-6 col-lg-3 my-5'>
+                <price-tab class='px-2 py-4 d-block text-center'>
+                  <h3 class='my-3 text-uppercase color-theme f-family title_font_size-{{ section.id }}'>{{ block.settings.plan_yr_title }}</h3>
+                  <savings class='color-theme px-3 f-family'>{{ block.settings.plan_yr_savings }}</savings>
+                  <h4 class='plan-price mb-3 f-family' >{{ block.settings.plan_yr_price }}</h4>
+                  <free-stuff class='color-theme px-3 my-3 d-block f-family'>{{ block.settings.free_yr_stuff }}</free-stuff>
+                  <div class='text-center px-3 f-size-regular-{{ section.id }}'>{{ block.settings.plan_yr_details }}</div>
+                  <div class='mt-5 mb-3 px-3 f-family'>{{ block.settings.giveaway_yr_entries }}</div>
+                  <div class='btn-container'>
+                     <a class='  btn-lg f-family text-decoration-none ' href="{{ block.settings.product_yr_url }}">ADD TO CART</a>
+                  </div>
+                </price-tab> 
+              </div>
+          {% endif %}
+           {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pricing Tabs",
+  "settings" : [
+    {
+      "type": "color",
+      "id": "plan_theme_color",
+      "label": "Enter title color"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "unit": "px",
+      "label": "choose the title font size : ",
+      "info":"this will apply to all plan cards titles",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "btn_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "choose the button font size :",
+      "info":"this will apply to all plan cards buttons",
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Monthly Plan",
+      "type": "month_plan",
+      "settings": [
+        {
+          "type": "text",
+          "id": "plan_mo_title",
+          "label": "Enter the plan title"
+        },
+
+        {
+          "type": "text",
+          "id": "plan_mo_savings",
+          "label": "Enter the plan savings (optional)"
+        },
+        {
+          "type": "text",
+          "id": "plan_mo_price",
+          "label": "Enter the plan price"
+        },
+        {
+          "type": "richtext",
+          "id": "free_mo_stuff",
+          "label": "Enter any free stuff (optional)"
+        },
+        {
+          "type": "richtext",
+          "id": "plan_mo_details",
+          "label": "Enter the plan details"
+        },
+        {
+          "type": "richtext",
+          "id": "giveaway_mo_entries",
+          "label": "Enter the (Giveaway Entries) number"
+        },
+        {
+          "type": "url",
+          "id": "product_mo_url",
+          "label": "Enter url"
+        }
+      ]
+    },
+    {
+      "name": "Yearly Plan",
+      "type": "year_plan",
+      "settings": [
+        {
+          "type": "text",
+          "id": "plan_yr_title",
+          "label": "Enter the plan title"
+        },  
+        {
+          "type": "text",
+          "id": "plan_yr_savings",
+          "label": "Enter the plan savings (optional)"
+        },
+        {
+          "type": "text",
+          "id": "plan_yr_price",
+          "label": "Enter the plan price"
+        },
+        {
+          "type": "richtext",
+          "id": "free_yr_stuff",
+          "label": "Enter any free stuff (optional)"
+        },
+        {
+          "type": "richtext",
+          "id": "plan_yr_details",
+          "label": "Enter the plan details"
+        },
+        {
+          "type": "richtext",
+          "id": "giveaway_yr_entries",
+          "label": "Enter the (Giveaway Entries) number"
+        },
+        {
+          "type": "url",
+          "id": "product_yr_url",
+          "label": "Enter url"
+        }
+      ]
+    }
+  ],
+
+
+
+
+  
+  "presets": [
+    {
+      "name": "Pricing Tabs",
+      "category": "pricing"
+    }
+  ]
+}
+{% endschema %}
